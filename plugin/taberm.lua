@@ -1,4 +1,4 @@
-local tbm = require('taberm')
+local tbm = require('nvim-taberm')
 
 vim.api.nvim_set_keymap('n', '<leader>xx', '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
 vim.api.nvim_set_keymap('n', '<leader>xv', '', { callback = tbm.v, noremap = true, silent = true, desc = 'new term vertical' })
