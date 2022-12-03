@@ -7,7 +7,8 @@ local default_config = {
         horizontal_ext = '<leader>xC',
         toggle         = '<c-t>',
     },
-    toggle_layout = 'vertical'
+    toggle_layout = 'vertical',
+    shell_integration = true
 }
 
 return default_config

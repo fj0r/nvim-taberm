@@ -166,8 +166,14 @@ local layout_command = {
 function M.setup(tbl)
     local conf = vim.tbl_deep_extend('force', require('taberm.config'), tbl or {})
     M.config = conf
+
     M.layout_command = layout_command[conf.toggle_layout]
+
     require'taberm.keymap'.config(conf.keymap)
+
+    if conf.shell_integration then
+        require'taberm.shell'.setup()
+    end
 end
 
 return M
