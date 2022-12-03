@@ -12,3 +12,29 @@ vim.api.nvim_set_keymap('t', '<C-y>', '', {
         vim.api.nvim_chan_send(chan, t)
     end
 })
+
+
+local tbm = require('taberm.core')
+
+vim.api.nvim_create_user_command('X',  tbm.t, { nargs = '?' , desc = 'new term tab'})
+vim.api.nvim_create_user_command('Xv', tbm.v, { nargs = '?' , desc = 'new term vertical'})
+vim.api.nvim_create_user_command('XV', tbm.V, { nargs = '?' , desc = 'new term vertical ext'})
+vim.api.nvim_create_user_command('Xc', tbm.c, { nargs = '?' , desc = 'new term'})
+vim.api.nvim_create_user_command('XC', tbm.C, { nargs = '?' , desc = 'new term ext'})
+
+vim.api.nvim_create_user_command('Xdebug', tbm.debug, { nargs = '?' , desc = 'term debug'})
+
+local M = {}
+
+function M.config(config)
+    vim.api.nvim_set_keymap('n', config.tab, '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
+    vim.api.nvim_set_keymap('n', config.vertical, '', { callback = tbm.v, noremap = true, silent = true, desc = 'new term vertical' })
+    vim.api.nvim_set_keymap('n', config.vertical_ext, '', { callback = tbm.V, noremap = true, silent = true, desc = 'new term vertical ext' })
+    vim.api.nvim_set_keymap('n', config.horizontal, '', { callback = tbm.c, noremap = true, silent = true, desc = 'new term' })
+    vim.api.nvim_set_keymap('n', config.horizontal_ext, '', { callback = tbm.C, noremap = true, silent = true, desc = 'new term ext' })
+
+    vim.api.nvim_set_keymap('n', config.toggle, '', { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
+    vim.api.nvim_set_keymap('t', config.toggle, '', { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
+end
+
+return M
