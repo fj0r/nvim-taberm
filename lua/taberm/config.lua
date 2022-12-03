@@ -6,7 +6,8 @@ local default_config = {
         horizontal     = '<leader>xc',
         horizontal_ext = '<leader>xC',
         toggle         = '<c-t>',
-    }
+    },
+    toggle_layout = 'vertical'
 }
 
 return default_config

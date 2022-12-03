@@ -131,14 +131,18 @@ function M.toggle_taberm()
             for _, b in pairs(tab_term[ctab]) do
                 if first then
                     first = false
-                    vim.api.nvim_command('botright vnew')
+                    vim.api.nvim_command(M.layout_command[1])
                 else
-                    vim.api.nvim_command('rightbelow new')
+                    vim.api.nvim_command(M.layout_command[2])
                 end
                 vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
             end
         else
-            M.v()
+            if M.config.toggle_layout == 'horizontal' then
+                M.c()
+            else
+                M.v()
+            end
         end
     end
 end
@@ -155,8 +159,14 @@ M.c  = M.get('rightbelow new', '')
 M.C  = M.get('botright new', '')
 M.n  = M.get(nil, '')
 
+local layout_command = {
+    vertical = {'botright vnew', 'rightbelow new'},
+    horizontal = {'botright new', 'rightbelow vnew'}
+}
 function M.setup(tbl)
     local conf = vim.tbl_deep_extend('force', require('taberm.config'), tbl or {})
+    M.config = conf
+    M.layout_command = layout_command[conf.toggle_layout]
     require'taberm.keymap'.config(conf.keymap)
 end
 
