@@ -155,4 +155,9 @@ M.c  = M.get('rightbelow new', '')
 M.C  = M.get('botright new', '')
 M.n  = M.get(nil, '')
 
+function M.setup(tbl)
+    local conf = vim.tbl_deep_extend('force', require('taberm.config'), tbl or {})
+    require'taberm.keymap'.config(conf.keymap)
+end
+
 return M

@@ -9,13 +9,4 @@ local default_config = {
     }
 }
 
-local kmp = require'taberm.keymap'
-local M = {}
-
-
-function M.config(tbl)
-    local conf = vim.tbl_deep_extend('force', default_config, tbl)
-    kmp.config(conf.keymap)
-end
-
-return M
+return default_config
