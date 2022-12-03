@@ -14,7 +14,6 @@
  - [x] nushell
     - [x] send '\n'
     - [x] auto tcd
-       - [-] do not `tcd` when multiple term in one tab
        - [x] pin tabname manually
        - [x] smart tcd (HookPwdChanged: is git or not under git)
     - [x] open file in cli

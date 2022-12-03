@@ -1,4 +1,6 @@
-local log = function (msg)
+local M = {}
+
+function M.log(msg)
     if true then
         local notify = require'notify'.notify
         notify(vim.inspect(msg))
@@ -7,10 +9,12 @@ local log = function (msg)
     end
 end
 
-local get_tabpage = function (n)
+ function M.get_tabpage(n)
     for _, i in pairs(vim.api.nvim_list_tabpages()) do
         if vim.api.nvim_tabpage_get_number(i) == n then
             return i
         end
     end
 end
+
+return M
