@@ -10,11 +10,14 @@ function M.log(msg)
 end
 
 function M.list_tabpage()
+    local m = {}
     local t = {}
     for _, i in pairs(vim.api.nvim_list_tabpages()) do
-        t[i] = vim.api.nvim_tabpage_get_number(i)
+        local x = vim.api.nvim_tabpage_get_number(i)
+        m[i] = x
+        table.insert(t, x)
     end
-    return t
+    return m, t
 end
 
 function M.get_tabpage(n)

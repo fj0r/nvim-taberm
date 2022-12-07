@@ -2,13 +2,13 @@ local log = require'taberm.utils'.log
 
 local M = {}
 
-local tab_term = {}
+local TAB_TERM = {}
 
 
 function M.get (action, cmd, newtab)
     return function (ctx)
         local tab = vim.api.nvim_get_current_tabpage()
-        local tot = tab_term[tab]
+        local tot = TAB_TERM[tab]
         local cnt = vim.v.count
         local shell = vim.fn.getenv('SHELL')
         if tot and tot[cnt] and not newtab then
@@ -32,14 +32,14 @@ function M.get (action, cmd, newtab)
             --vim.api.nvim_command('silent tcd! .')
             if newtab then
                 tab = vim.api.nvim_get_current_tabpage()
-                tot = tab_term[tab]
+                tot = TAB_TERM[tab]
             end
             if not tot then
-                tab_term[tab] = {}
+                TAB_TERM[tab] = {}
             end
-            tab_term[tab][cnt] = vim.api.nvim_get_current_buf()
+            TAB_TERM[tab][cnt] = vim.api.nvim_get_current_buf()
         end
-        local chan = vim.api.nvim_buf_get_var(tab_term[tab][cnt], 'terminal_job_id')
+        local chan = vim.api.nvim_buf_get_var(TAB_TERM[tab][cnt], 'terminal_job_id')
         if ctx then
             vim.api.nvim_chan_send(chan, ctx.args..'\n')
         else
@@ -68,22 +68,16 @@ function M.prepare (ctx)
 end
 
 function M.release(buf)
-    for tx, t in pairs(tab_term) do
+    for tx, t in pairs(TAB_TERM) do
         for bx, b in pairs(t) do
             if b == buf then
-                tab_term[tx][bx] = nil
+                TAB_TERM[tx][bx] = nil
             end
         end
     end
 end
 
 function M.close_tab(tab)
-    --local t = get_tabpage(tonumber(tab))
-    --if t == nil then return end
-    --for _, b in pairs(tab_term[t]) do
-    --    vim.api.nvim_buf_delete(b, {})
-    --end
-
     local available = {}
 
     for _, i in pairs(vim.api.nvim_list_tabpages()) do
@@ -91,17 +85,17 @@ function M.close_tab(tab)
     end
 
     local unavailable = {}
-    for t, _ in pairs(tab_term) do
+    for t, _ in pairs(TAB_TERM) do
         if not available[t] then
             table.insert(unavailable, t)
         end
     end
 
     for _, u in pairs(unavailable) do
-        for _, b in pairs(tab_term[u]) do
+        for _, b in pairs(TAB_TERM[u]) do
             vim.api.nvim_buf_delete(b, {force = true})
         end
-        tab_term[u] = nil
+        TAB_TERM[u] = nil
     end
 end
 
@@ -113,7 +107,7 @@ function M.toggle_taberm()
         buf2win[vim.api.nvim_win_get_buf(i)] = i
     end
     local termwins = {}
-    for _, b in pairs(tab_term[ctab] or {}) do
+    for _, b in pairs(TAB_TERM[ctab] or {}) do
         if buf2win[b] then
             table.insert(termwins, buf2win[b])
         end
@@ -126,9 +120,9 @@ function M.toggle_taberm()
             vim.api.nvim_win_close(w, {force=true})
         end
     else
-        if tab_term[ctab] then
+        if TAB_TERM[ctab] then
             local first = true
-            for _, b in pairs(tab_term[ctab]) do
+            for _, b in pairs(TAB_TERM[ctab]) do
                 if first then
                     first = false
                     vim.api.nvim_command(M.layout_command[1])
@@ -148,7 +142,7 @@ function M.toggle_taberm()
 end
 
 function M.debug()
-    log(tab_term)
+    log(TAB_TERM)
 end
 
 
