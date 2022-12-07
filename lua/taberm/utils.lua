@@ -25,4 +25,14 @@ function M.get_tabpage(n)
     end
 end
 
+
+function M.digit (n)
+    local r = {}
+    for bit = math.floor(math.log10(n)), 0, -1 do
+        local d = math.floor(math.fmod(n/math.pow(10, bit), 10))
+        r[d] = true
+    end
+    return r
+end
+
 return M

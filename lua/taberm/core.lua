@@ -1,4 +1,4 @@
-local log = require'taberm.utils'.log
+local u = require'taberm.utils'
 
 local M = {}
 
@@ -122,7 +122,18 @@ function M.toggle_taberm()
     else
         if TAB_TERM[ctab] then
             local first = true
-            for _, b in pairs(TAB_TERM[ctab]) do
+            local display = {}
+            if vim.v.count == 0 then
+                display = TAB_TERM[ctab]
+            else
+                local mask = u.digit(vim.v.count)
+                for mx, mb in pairs(TAB_TERM[ctab]) do
+                    if mask[mx] then
+                        display[mx] = mb
+                    end
+                end
+            end
+            for _, b in pairs(display) do
                 if first then
                     first = false
                     vim.api.nvim_command(M.layout_command[1])
@@ -142,7 +153,7 @@ function M.toggle_taberm()
 end
 
 function M.debug()
-    log(TAB_TERM)
+    u.log(TAB_TERM)
 end
 
 
