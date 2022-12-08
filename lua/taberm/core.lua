@@ -125,7 +125,7 @@ function M.toggle_taberm()
             local display = {}
             local mask, dup = u.digit(cnt)
 
-            if dup or cnt == 0 then
+            if dup then
                 display = TAB_TERM[ctab]
             else
                 for mx, mb in pairs(TAB_TERM[ctab]) do
