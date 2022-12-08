@@ -9,7 +9,7 @@ function M.get (action, cmd, newtab)
     return function (ctx)
         local tab = vim.api.nvim_get_current_tabpage()
         local tot = TAB_TERM[tab]
-        local cnt = vim.v.count
+        local cnt = vim.v.count1
         local shell = vim.fn.getenv('SHELL')
         if tot and tot[cnt] and not newtab then
             local t = tot[cnt]
@@ -121,18 +121,21 @@ function M.toggle_taberm()
         end
     else
         if TAB_TERM[ctab] then
-            local first = true
+            local cnt = vim.v.count1
             local display = {}
-            if vim.v.count == 0 then
+            local mask, dup = u.digit(cnt)
+
+            if dup or cnt == 0 then
                 display = TAB_TERM[ctab]
             else
-                local mask = u.digit(vim.v.count)
                 for mx, mb in pairs(TAB_TERM[ctab]) do
                     if mask[mx] then
                         display[mx] = mb
                     end
                 end
             end
+
+            local first = true
             for _, b in pairs(display) do
                 if first then
                     first = false

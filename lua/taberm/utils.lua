@@ -27,12 +27,14 @@ end
 
 
 function M.digit (n)
-    local r = {}
+    local map = {}
+    local dup = false
     for bit = math.floor(math.log10(n)), 0, -1 do
         local d = math.floor(math.fmod(n/math.pow(10, bit), 10))
-        r[d] = true
+        if map[d] then dup = true end
+        map[d] = true
     end
-    return r
+    return map, dup
 end
 
 return M
