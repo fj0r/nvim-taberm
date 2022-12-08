@@ -37,4 +37,11 @@ function M.digit (n)
     return map, dup
 end
 
+function M.has_key(list)
+    for _ in pairs(list) do
+        return true
+    end
+    return false
+end
+
 return M

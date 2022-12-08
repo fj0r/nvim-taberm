@@ -106,45 +106,49 @@ function M.toggle_taberm()
     for _, i in pairs(ctabwins) do
         buf2win[vim.api.nvim_win_get_buf(i)] = i
     end
-    local termwins = {}
+    local win_buf = {}
     for _, b in pairs(TAB_TERM[ctab] or {}) do
         if buf2win[b] then
-            termwins[buf2win[b]] = b
+            win_buf[buf2win[b]] = b
         end
     end
-    if #ctabwins < 2 then
-        return
-    end
+
     if TAB_TERM[ctab] then
+        -- hide, win_buf : { win -> buf }
+        -- show : [ buf ]
+        -- toggle, cnt : id
+        -- TAB_TERM[ctab] : { id -> buf }
         local cnt = vim.v.count1
-        local display = {}
+        local show = {}
         local hide = {}
-        local mask, dup = u.digit(cnt)
+        local toggle, dup = u.digit(cnt)
 
         if dup then
-            if #termwins > 0 then
-                hide = termwins
+            if u.has_key(win_buf) then
+                hide = win_buf
             else
-                display = TAB_TERM[ctab]
+                show = TAB_TERM[ctab]
             end
         else
             for mx, mb in pairs(TAB_TERM[ctab]) do
-                if mask[mx] then
-                    if termwins[mb] then
-                        hide[mx] = mb
+                if toggle[mx] then
+                    local w = buf2win[mb]
+                    if win_buf[w] then
+                        hide[w] = mb
                     else
-                        display[mx] = mb
+                        table.insert(show, mb)
                     end
                 end
             end
         end
+        -- u.log{win_buf = win_buf, show = show, hide = hide}
 
         for w, _ in pairs(hide) do
             vim.api.nvim_win_close(w, {force=true})
         end
 
         local first = true
-        for _, b in pairs(display) do
+        for _, b in pairs(show) do
             if first then
                 first = false
                 vim.api.nvim_command(M.layout_command[1])
