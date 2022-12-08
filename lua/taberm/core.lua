@@ -102,68 +102,70 @@ end
 function M.toggle_taberm()
     local ctab = vim.api.nvim_get_current_tabpage()
     local ctabwins = vim.api.nvim_tabpage_list_wins(ctab)
+    local cterm = TAB_TERM[ctab] or {}
     local buf2win = {}
     for _, i in pairs(ctabwins) do
         buf2win[vim.api.nvim_win_get_buf(i)] = i
     end
     local win_buf = {}
-    for _, b in pairs(TAB_TERM[ctab] or {}) do
+    for _, b in pairs(cterm) do
         if buf2win[b] then
             win_buf[buf2win[b]] = b
         end
     end
 
-    if TAB_TERM[ctab] then
-        -- hide, win_buf : { win -> buf }
-        -- show : [ buf ]
-        -- toggle, cnt : id
-        -- TAB_TERM[ctab] : { id -> buf }
-        local cnt = vim.v.count1
-        local show = {}
-        local hide = {}
-        local toggle, dup = u.digit(cnt)
+    -- cterm : { id -> buf }
+    -- toggle, cnt : id
+    local cnt = vim.v.count1
+    local toggle, dup = u.digit(cnt)
+    -- hide, win_buf : { win -> buf }
+    -- show : [ buf ]
+    local show = {}
+    local hide = {}
 
-        if dup then
-            if u.has_key(win_buf) then
-                hide = win_buf
-            else
-                show = TAB_TERM[ctab]
-            end
+    if dup then
+        if u.has_key(win_buf) then
+            hide = win_buf
         else
-            for mx, mb in pairs(TAB_TERM[ctab]) do
-                if toggle[mx] then
-                    local w = buf2win[mb]
-                    if win_buf[w] then
-                        hide[w] = mb
-                    else
-                        table.insert(show, mb)
-                    end
+            show = cterm
+        end
+    else
+        for id, _ in pairs(toggle) do
+            local tb = cterm[id]
+            if tb then
+                local w = buf2win[tb]
+                if win_buf[w] then
+                    hide[w] = tb
+                else
+                    table.insert(show, tb)
+                end
+            else
+                if M.config.toggle_layout == 'horizontal' then
+                    M.c()
+                else
+                    M.v()
                 end
             end
         end
-        -- u.log{win_buf = win_buf, show = show, hide = hide}
-
-        for w, _ in pairs(hide) do
-            vim.api.nvim_win_close(w, {force=true})
-        end
-
-        local first = true
-        for _, b in pairs(show) do
-            if first then
-                first = false
-                vim.api.nvim_command(M.layout_command[1])
-            else
-                vim.api.nvim_command(M.layout_command[2])
-            end
-            vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
-        end
-    else
-        if M.config.toggle_layout == 'horizontal' then
-            M.c()
-        else
-            M.v()
-        end
     end
+
+    --u.log{win_buf = win_buf, show = show, hide = hide, toggle = toggle, cterm = cterm, buf2win = buf2win}
+
+    for w, _ in pairs(hide) do
+        vim.api.nvim_win_close(w, {force=true})
+    end
+
+    local first = true
+    for _, b in pairs(show) do
+        if first then
+            first = false
+            vim.api.nvim_command(M.layout_command[1])
+        else
+            vim.api.nvim_command(M.layout_command[2])
+        end
+        vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
+    end
+
 end
 
 function M.debug()
