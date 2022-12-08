@@ -109,48 +109,55 @@ function M.toggle_taberm()
     local termwins = {}
     for _, b in pairs(TAB_TERM[ctab] or {}) do
         if buf2win[b] then
-            table.insert(termwins, buf2win[b])
+            termwins[buf2win[b]] = b
         end
     end
-    if #termwins > 0 then
-        if #termwins == #ctabwins then
-            return
-        end
-        for _, w in pairs(termwins) do
-            vim.api.nvim_win_close(w, {force=true})
-        end
-    else
-        if TAB_TERM[ctab] then
-            local cnt = vim.v.count1
-            local display = {}
-            local mask, dup = u.digit(cnt)
+    if #ctabwins < 2 then
+        return
+    end
+    if TAB_TERM[ctab] then
+        local cnt = vim.v.count1
+        local display = {}
+        local hide = {}
+        local mask, dup = u.digit(cnt)
 
-            if dup then
-                display = TAB_TERM[ctab]
+        if dup then
+            if #termwins > 0 then
+                hide = termwins
             else
-                for mx, mb in pairs(TAB_TERM[ctab]) do
-                    if mask[mx] then
+                display = TAB_TERM[ctab]
+            end
+        else
+            for mx, mb in pairs(TAB_TERM[ctab]) do
+                if mask[mx] then
+                    if termwins[mb] then
+                        hide[mx] = mb
+                    else
                         display[mx] = mb
                     end
                 end
             end
+        end
 
-            local first = true
-            for _, b in pairs(display) do
-                if first then
-                    first = false
-                    vim.api.nvim_command(M.layout_command[1])
-                else
-                    vim.api.nvim_command(M.layout_command[2])
-                end
-                vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
-            end
-        else
-            if M.config.toggle_layout == 'horizontal' then
-                M.c()
+        for w, _ in pairs(hide) do
+            vim.api.nvim_win_close(w, {force=true})
+        end
+
+        local first = true
+        for _, b in pairs(display) do
+            if first then
+                first = false
+                vim.api.nvim_command(M.layout_command[1])
             else
-                M.v()
+                vim.api.nvim_command(M.layout_command[2])
             end
+            vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
+        end
+    else
+        if M.config.toggle_layout == 'horizontal' then
+            M.c()
+        else
+            M.v()
         end
     end
 end
