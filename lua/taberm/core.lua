@@ -3,6 +3,7 @@ local u = require'taberm.utils'
 local M = {}
 
 local TAB_TERM = {}
+local TOGGLE_COUNT = {}
 
 
 function M.get (action, cmd, newtab)
@@ -102,6 +103,7 @@ end
 function M.toggle_taberm()
     local ctab = vim.api.nvim_get_current_tabpage()
     local ctabwins = vim.api.nvim_tabpage_list_wins(ctab)
+    -- cterm : { id -> buf }
     local cterm = TAB_TERM[ctab] or {}
     local buf2win = {}
     for _, i in pairs(ctabwins) do
@@ -114,9 +116,20 @@ function M.toggle_taberm()
         end
     end
 
-    -- cterm : { id -> buf }
-    -- toggle, cnt : id
-    local cnt = vim.v.count1
+    -- cnt : id
+    local cnt
+    if vim.v.count == 0 then
+        if TOGGLE_COUNT[ctab] then
+            cnt = TOGGLE_COUNT[ctab]
+        else
+            cnt = 1
+        end
+    else
+        cnt = vim.v.count
+        TOGGLE_COUNT[ctab] = cnt
+    end
+
+    -- toggle, dup : [ id ], bool
     local toggle, dup = u.digit(cnt)
     -- hide, win_buf : { win -> buf }
     -- show : [ buf ]
@@ -169,7 +182,7 @@ function M.toggle_taberm()
 end
 
 function M.debug()
-    u.log(TAB_TERM)
+    u.log { TAB_TERM = TAB_TERM, TOGGLE_IDX = TOGGLE_COUNT }
 end
 
 
