@@ -15,26 +15,21 @@ M.find = function (path)
     return root_dir
 end
 
-M.root = function (path, relative)
-    -- relative:
-    -- 0 or nil /$HOME/a/b/c
-    -- 1 ~/a/b/c
-    -- 2 a/b/c
+M.root = function (path, base_home)
+    -- :
+    -- false or nil /$HOME/a/b/c
+    -- true ~/a/b/c
     if not path then return end
 
     local p = M.find(path)
     if not p then return end
 
-    if not relative or relative == 0 then
+    if not base_home then
         return p
-    end
-
-    local home = vim.fn.getenv('HOME')
-    if relative == 1 then
+    else
+        local home = vim.fn.getenv('HOME')
         return vim.fn.substitute(p, home, '~', '')
     end
-
-    return string.sub(p, #home+ 2, -1)
 end
 
 return M
