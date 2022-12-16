@@ -1,10 +1,11 @@
  # switch terminal based on tabs
 
- - [ ] setup
+ - [x] setup
  - [x] <c-t> toggle term
     - [x] create if non exist
     - [x] change to <c-x>
  - [x] quit term when tabclose
+ - [ ] fold term prompt
  - [ ] term num in status line(openterm('nu', {name = ...}))
  - [ ] change to insert mode when enter term and cursor at last line
     term get actual line (vim.fn.line('$') get buffer line)
