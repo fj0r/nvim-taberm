@@ -3,7 +3,7 @@
  - [x] setup
  - [x] <c-t> toggle term
     - [x] create if non exist
-    - [x] change to <c-x>
+    - [x] change to <c-/>
  - [x] quit term when tabclose
  - [ ] fold term prompt
  - [ ] term num in status line(openterm('nu', {name = ...}))
