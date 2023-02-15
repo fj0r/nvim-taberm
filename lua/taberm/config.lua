@@ -5,7 +5,7 @@ local default_config = {
         vertical_ext   = '<leader>xV',
         horizontal     = '<leader>xc',
         horizontal_ext = '<leader>xC',
-        toggle         = '<c-s>',
+        toggle         = '<c-x>',
     },
     toggle_layout = 'vertical',
     shell_integration = true
