@@ -11,7 +11,7 @@ function M.get (action, cmd, newtab)
         local tab = vim.api.nvim_get_current_tabpage()
         local tot = TAB_TERM[tab]
         local cnt = vim.v.count1
-        local shell = vim.fn.getenv('SHELL')
+        local shell = os.getenv('SHELL') or '/bin/bash'
         if tot and tot[cnt] and not newtab then
             local t = tot[cnt]
             local ws = vim.api.nvim_tabpage_list_wins(tab)
