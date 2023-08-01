@@ -5,12 +5,15 @@ function M.setup()
         nvim --headless --noplugin --server $env.NVIM --remote-send $"<cmd>lua HookPwdChanged\('($after)', '($before)')<cr>"
     }
     --]]
-    local vcs_root = require'taberm.vcs'.root
     function HookPwdChanged(after, before)
         vim.b.pwd = after
 
-        local git_dir = vcs_root(after, nil)
-        vim.api.nvim_command('silent tcd! '..(git_dir or after))
+        local git_dir = vim.fs.find('.git', {
+            upward = true,
+            stop = vim.uv.os_homedir(),
+            path = after,
+        })[1]
+        vim.api.nvim_command('silent tcd! ' .. (git_dir or after))
     end
 
     --[[ $env.EDITOR
@@ -45,8 +48,9 @@ function M.setup()
         local win = vim.api.nvim_get_current_win()
         local buf = vim.api.nvim_create_buf(true, true)
         vim.api.nvim_win_set_buf(win, buf)
-        vim.api.nvim_command('read '..path)
+        vim.api.nvim_command('read ' .. path)
         vim.fn.delete(path)
     end
 end
+
 return M

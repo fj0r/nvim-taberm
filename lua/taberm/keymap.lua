@@ -1,7 +1,7 @@
-vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-N>]], { noremap = true, silent = true })
+vim.keymap.set('t', '<Esc>', [[<C-\><C-N>]], { noremap = true, silent = true })
 -- Pasting in terminal mode
 -- vim.cmd [[tnoremap <expr> <C-r> '<C-\><C-N>"'.nr2char(getchar()).'pi']]
-vim.api.nvim_set_keymap('t', '<C-y>', '', {
+vim.keymap.set('t', '<C-y>', '', {
     expr = true,
     callback = function ()
         --require("registers").show_window({ mode = "insert" })
@@ -27,14 +27,14 @@ vim.api.nvim_create_user_command('Xdebug', tbm.debug, { nargs = '?' , desc = 'te
 local M = {}
 
 function M.config(config)
-    vim.api.nvim_set_keymap('n', config.tab, '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
-    vim.api.nvim_set_keymap('n', config.vertical, '', { callback = tbm.v, noremap = true, silent = true, desc = 'new term vertical' })
-    vim.api.nvim_set_keymap('n', config.vertical_ext, '', { callback = tbm.V, noremap = true, silent = true, desc = 'new term vertical ext' })
-    vim.api.nvim_set_keymap('n', config.horizontal, '', { callback = tbm.c, noremap = true, silent = true, desc = 'new term' })
-    vim.api.nvim_set_keymap('n', config.horizontal_ext, '', { callback = tbm.C, noremap = true, silent = true, desc = 'new term ext' })
+    vim.keymap.set('n', config.tab, '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
+    vim.keymap.set('n', config.vertical, '', { callback = tbm.v, noremap = true, silent = true, desc = 'new term vertical' })
+    vim.keymap.set('n', config.vertical_ext, '', { callback = tbm.V, noremap = true, silent = true, desc = 'new term vertical ext' })
+    vim.keymap.set('n', config.horizontal, '', { callback = tbm.c, noremap = true, silent = true, desc = 'new term' })
+    vim.keymap.set('n', config.horizontal_ext, '', { callback = tbm.C, noremap = true, silent = true, desc = 'new term ext' })
 
-    vim.api.nvim_set_keymap('n', config.toggle, '', { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
-    vim.api.nvim_set_keymap('t', config.toggle, '', { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
+    vim.keymap.set('n', config.toggle, '', { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
+    vim.keymap.set('t', config.toggle, '', { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
 end
 
 return M
