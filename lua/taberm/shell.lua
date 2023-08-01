@@ -13,7 +13,7 @@ function M.setup()
             stop = vim.uv.os_homedir(),
             path = after,
         })[1]
-        vim.api.nvim_command('silent tcd! ' .. (git_dir or after))
+        vim.api.nvim_command('silent tcd! ' .. (git_dir and vim.fs.dirname(git_dir) or after))
     end
 
     --[[ $env.EDITOR
