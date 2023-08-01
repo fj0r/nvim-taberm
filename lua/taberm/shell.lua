@@ -1,7 +1,7 @@
 local M = {}
 function M.setup()
     --[[ tcd hook
-    if 'NVIM' in (env).name {
+    if 'NVIM' in $env {
         nvim --headless --noplugin --server $env.NVIM --remote-send $"<cmd>lua HookPwdChanged\('($after)', '($before)')<cr>"
     }
     --]]
@@ -20,7 +20,7 @@ function M.setup()
     #!/usr/bin/env nu
 
     def main [file: string] {
-        if 'NVIM' in (env).name {
+        if 'NVIM' in $env {
             nvim --headless --noplugin --server $env.NVIM --remote-wait $file
         } else {
             nvim $file
