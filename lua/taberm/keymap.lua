@@ -7,6 +7,7 @@ vim.keymap.set('t', '<C-y>', '', {
         --require("registers").show_window({ mode = "insert" })
         --vim.api.nvim_command('Registers')
         local t = vim.fn.getreg(vim.fn.nr2char(vim.fn.getchar()))
+        if t == nil then return end
         local buf = vim.api.nvim_get_current_buf()
         local chan = vim.api.nvim_buf_get_var(buf, 'terminal_job_id')
         vim.api.nvim_chan_send(chan, t)
