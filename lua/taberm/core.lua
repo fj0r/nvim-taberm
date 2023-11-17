@@ -58,7 +58,8 @@ function M.prepare (ctx)
     vim.opt_local.mouse = ''
     --vim.opt_local.hlsearch = false
     vim.opt_local.cursorline = false
-    vim.opt_local.lazyredraw = true
+    vim.opt_local.lazyredraw = false
+    vim.opt_local.sidescrolloff = 0
     local curr_line = vim.fn.line('.')
     local last_line = vim.fn.line('$')
     local window_line = vim.fn.line('w$') - vim.fn.line('w0')
