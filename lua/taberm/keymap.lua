@@ -1,4 +1,4 @@
-vim.keymap.set('t', '<Esc>', [[<C-\><C-N>]], { noremap = true, silent = true })
+-- vim.keymap.set('t', '<C-\\>', [[<C-\><C-N>]], { noremap = true, silent = true })
 -- Pasting in terminal mode
 -- vim.cmd [[tnoremap <expr> <C-r> '<C-\><C-N>"'.nr2char(getchar()).'pi']]
 vim.keymap.set('t', '<C-y>', '', {
