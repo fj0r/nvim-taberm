@@ -6,6 +6,7 @@ local default_config = {
         horizontal     = '<leader>xc',
         horizontal_ext = '<leader>xC',
         toggle         = '<M-x>',
+        paste          = '<M-y>',
     },
     toggle_layout = 'vertical',
     shell_integration = true
