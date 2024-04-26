@@ -25,7 +25,7 @@ function M.config(config)
         { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
 
     if config.normal ~= nil then
-        -- '<C-\\>'
+        -- '<M-[>'
         vim.keymap.set('t', config.normal, [[<C-\><C-N>]],
             { noremap = true, silent = true, desc = 'back to normal mode' })
     end
