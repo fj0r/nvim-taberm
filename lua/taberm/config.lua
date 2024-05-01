@@ -11,9 +11,9 @@ local default_config = {
     direct_keys = {
         '<Enter>',
         '<M-w>', '<C-w>',
-        --'<C-d>', '<M-d>',
+        '<C-c>', '<M-c>', '<C-d>', '<M-d>',
         '<C-a>', '<C-e>', '<M-a>', '<M-e>',
-        --'<C-f>', '<C-b>', '<M-f>', '<M-b>',
+        '<C-f>', '<C-b>', '<M-f>', '<M-b>',
         '<C-n>', '<C-p>', '<M-n>', '<M-p>',
     },
     toggle_layout = 'vertical',
