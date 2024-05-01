@@ -43,7 +43,9 @@ function M.get(conf, action, cmd, newtab)
             for _, k in ipairs(conf.direct_keys) do
                 vim.keymap.set("n", k,
                     function()
-                        vim.api.nvim_input('i' .. k)
+                        vim.api.nvim_command('startinsert')
+                        local code = vim.api.nvim_replace_termcodes(k, true, false, true)
+                        vim.api.nvim_feedkeys(code, 'n', true)
                     end,
                     {
                         desc = "term: " .. k,
