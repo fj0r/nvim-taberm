@@ -2,7 +2,7 @@ local M = {}
 
 function M.log(msg)
     if true then
-        local notify = require'notify'.notify
+        local notify = require 'notify'.notify
         notify(vim.inspect(msg))
     else
         print(vim.inspect(msg))
@@ -25,12 +25,11 @@ function M.get_tabpage(n)
     end
 end
 
-
-function M.digit (n)
+function M.digit(n)
     local map = {}
     local dup = false
     for bit = math.floor(math.log10(n)), 0, -1 do
-        local d = math.floor(math.fmod(n/math.pow(10, bit), 10))
+        local d = math.floor(math.fmod(n / math.pow(10, bit), 10))
         if map[d] then dup = true end
         map[d] = true
     end
@@ -42,6 +41,21 @@ function M.has_key(list)
         return true
     end
     return false
+end
+
+function M.lines()
+    local window = vim.fn.line('w$') - vim.fn.line('w0')
+    local curr = vim.fn.line('.')
+    local bottom = vim.fn.line('$')
+    local last
+    if bottom > window + 1 then
+        last = vim.fn.line('$')
+    else
+        last = 0
+    end
+    return {
+        curr = curr, last = last, btm = bottom, win = window
+    }
 end
 
 return M

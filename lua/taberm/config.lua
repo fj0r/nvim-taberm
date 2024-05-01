@@ -8,6 +8,14 @@ local default_config = {
         toggle         = '<M-x>',
         paste          = '<M-y>',
     },
+    direct_keys = {
+        '<Enter>',
+        '<M-w>', '<C-w>',
+        --'<C-d>', '<M-d>',
+        '<C-a>', '<C-e>', '<M-a>', '<M-e>',
+        --'<C-f>', '<C-b>', '<M-f>', '<M-b>',
+        '<C-n>', '<C-p>', '<M-n>', '<M-p>',
+    },
     toggle_layout = 'vertical',
     shell_integration = true
 }
