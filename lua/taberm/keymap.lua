@@ -11,26 +11,25 @@ vim.api.nvim_create_user_command('Xdebug', tbm.debug, { nargs = '?', desc = 'ter
 local M = {}
 
 
-function M.config(config)
-    vim.keymap.set('n', config.tab, '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
-    vim.keymap.set('n', config.vertical, '',
+function M.config(kcfg)
+    vim.keymap.set('n', kcfg.tab, '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
+    vim.keymap.set('n', kcfg.vertical, '',
         { callback = tbm.v, noremap = true, silent = true, desc = 'new term vertical' })
-    vim.keymap.set('n', config.vertical_ext, '',
+    vim.keymap.set('n', kcfg.vertical_ext, '',
         { callback = tbm.V, noremap = true, silent = true, desc = 'new term vertical ext' })
-    vim.keymap.set('n', config.horizontal, '', { callback = tbm.c, noremap = true, silent = true, desc = 'new term' })
-    vim.keymap.set('n', config.horizontal_ext, '',
+    vim.keymap.set('n', kcfg.horizontal, '', { callback = tbm.c, noremap = true, silent = true, desc = 'new term' })
+    vim.keymap.set('n', kcfg.horizontal_ext, '',
         { callback = tbm.C, noremap = true, silent = true, desc = 'new term ext' })
 
-    vim.keymap.set({ 'n', 't' }, config.toggle, '',
+    vim.keymap.set({ 'n', 't' }, kcfg.toggle, '',
         { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
 
-    if config.normal ~= nil then
-        -- '<M-[>'
-        vim.keymap.set('t', config.normal, [[<C-\><C-N>]],
+    if kcfg.normal ~= nil then
+        vim.keymap.set('t', kcfg.normal, [[<C-\><C-N>]],
             { noremap = true, silent = true, desc = 'back to normal mode' })
     end
     -- vim.cmd [[tnoremap <expr> <C-r> '<C-\><C-N>"'.nr2char(getchar()).'pi']]
-    vim.keymap.set('t', config.paste, '', {
+    vim.keymap.set('t', kcfg.paste, '', {
         expr = true,
         callback = function()
             --require("registers").show_window({ mode = "insert" })
