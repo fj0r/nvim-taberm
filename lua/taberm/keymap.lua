@@ -10,6 +10,11 @@ vim.api.nvim_create_user_command('Xdebug', tbm.debug, { nargs = '?', desc = 'ter
 
 local M = {}
 
+local escape = function ()
+    local k = [[<C-\><C-N>]]
+    local code = vim.api.nvim_replace_termcodes(k, true, false, true)
+    vim.api.nvim_feedkeys(code, 'n', true)
+end
 
 function M.config(kcfg)
     vim.keymap.set('n', kcfg.tab, '', { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' })
@@ -24,9 +29,9 @@ function M.config(kcfg)
     vim.keymap.set({ 'n', 't' }, kcfg.toggle, '',
         { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
 
-    if kcfg.normal ~= nil then
-        vim.keymap.set('t', kcfg.normal, [[<C-\><C-N>]],
-            { noremap = true, silent = true, desc = 'back to normal mode' })
+    if kcfg.escape ~= nil then
+        vim.keymap.set('t', kcfg.escape, escape,
+            { noremap = true, silent = true, desc = 'escape' })
     end
     -- vim.cmd [[tnoremap <expr> <C-r> '<C-\><C-N>"'.nr2char(getchar()).'pi']]
     vim.keymap.set('t', kcfg.paste, '', {

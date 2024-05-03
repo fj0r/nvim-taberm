@@ -7,7 +7,7 @@ local default_config = {
         horizontal_ext = '<leader>xC',
         toggle         = '<M-x>',
         paste          = '<M-y>',
-        normal         = '<M-;>'
+        escape         = '<M-;>',
     },
     direct_keys = {
         '<Enter>',
