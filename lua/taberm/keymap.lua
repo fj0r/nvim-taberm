@@ -12,8 +12,11 @@ local M = {}
 
 local escape = function ()
     local k = [[<C-\><C-N>]]
-    local code = vim.api.nvim_replace_termcodes(k, true, false, true)
-    vim.api.nvim_feedkeys(code, 'n', true)
+    local nested = vim.b['taberm_blocked']
+    if not nested then
+        local code = vim.api.nvim_replace_termcodes(k, true, false, true)
+        vim.api.nvim_feedkeys(code, 'n', true)
+    end
 end
 
 function M.config(kcfg)
