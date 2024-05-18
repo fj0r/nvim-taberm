@@ -187,7 +187,7 @@ function M.toggle_taberm(horizontal)
         if horizontal then
             vim.api.nvim_command('rightbelow new')
         else
-            vim.api.nvim_command('botright vnew')
+            vim.api.nvim_command('rightbelow vnew')
         end
         vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
     end
@@ -203,8 +203,8 @@ function M.setup(tbl)
 
     M.t = M.get(conf, 'tabnew', '', true)
     M.v = M.get(conf, 'rightbelow vnew', '')
-    M.V = M.get(conf, 'botright vnew', '')
     M.c = M.get(conf, 'rightbelow new', '')
+    M.V = M.get(conf, 'botright vnew', '')
     M.C = M.get(conf, 'botright new', '')
     M.n = M.get(conf, nil, '')
 

@@ -1,10 +1,10 @@
 local default_config = {
     keymap = {
-        tab            = '<leader>xx',
-        vertical       = '<leader>xv',
-        vertical_ext   = '<leader>xV',
-        horizontal     = '<leader>xc',
-        horizontal_ext = '<leader>xC',
+        tab            = '<leader>x',
+        --vertical       = '<leader>xv',
+        --vertical_ext   = '<leader>xV',
+        --horizontal     = '<leader>xc',
+        --horizontal_ext = '<leader>xC',
         toggle         = '<M-x>',
         toggle_h       = '<M-c>',
         paste          = '<M-y>',
