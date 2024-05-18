@@ -1,7 +1,7 @@
 local M = {}
 
 function M.log(msg)
-    if true then
+    if false then
         local notify = require 'notify'.notify
         notify(vim.inspect(msg))
     else

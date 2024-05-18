@@ -3,7 +3,7 @@ local u = require 'taberm.utils'
 local M = {}
 
 local TAB_TERM = {}
-local TOGGLE_COUNT = {}
+local TOGGLE_INDEX = {}
 
 
 function M.get(conf, action, cmd, newtab)
@@ -134,14 +134,14 @@ function M.toggle_taberm(horizontal)
     -- cnt : id
     local cnt
     if vim.v.count == 0 then
-        if TOGGLE_COUNT[ctab] then
-            cnt = TOGGLE_COUNT[ctab]
+        if TOGGLE_INDEX[ctab] then
+            cnt = TOGGLE_INDEX[ctab]
         else
             cnt = 1
         end
     else
         cnt = vim.v.count
-        TOGGLE_COUNT[ctab] = cnt
+        TOGGLE_INDEX[ctab] = cnt
     end
 
     -- toggle, dup : [ id ], bool
@@ -194,7 +194,7 @@ function M.toggle_taberm(horizontal)
 end
 
 function M.debug()
-    u.log { TAB_TERM = TAB_TERM, TOGGLE_IDX = TOGGLE_COUNT }
+    u.log { TAB_TERM = TAB_TERM, TOGGLE_IDX = TOGGLE_INDEX }
 end
 
 function M.setup(tbl)
