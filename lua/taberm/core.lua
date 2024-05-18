@@ -186,9 +186,12 @@ function M.toggle_taberm(horizontal)
         end
     end
 
-    --u.log{win_buf = win_buf, show = show, hide = hide, toggle = toggle, cterm = cterm, buf2win = buf2win}
+    --u.log{win_buf = win_buf, show = show, hide = hide, toggle = toggle, cterm = cterm, buf2win = buf2win, ctabwins = ctabwins}
 
     for w, _ in pairs(hide) do
+        if #ctabwins <= 1 then
+            break
+        end
         vim.api.nvim_win_close(w, { force = true })
     end
 
