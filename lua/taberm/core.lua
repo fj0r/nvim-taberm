@@ -197,9 +197,9 @@ function M.toggle_taberm(horizontal)
 
     for _, b in pairs(show) do
         if horizontal then
-            vim.api.nvim_command('rightbelow new')
+            vim.api.nvim_command('rightbelow split')
         else
-            vim.api.nvim_command('rightbelow vnew')
+            vim.api.nvim_command('rightbelow vsplit')
         end
         vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
     end
