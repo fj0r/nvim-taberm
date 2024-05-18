@@ -1,5 +1,10 @@
  # switch terminal based on tabs
 
+- <M-x>: toggle term
+- <M-c>: toggle term horizontal
+- <M-;>: back to normal mode
+- vim.v.count1: term id
+
  - [x] setup
  - [x] <c-t> toggle term
     - [x] create if non exist
