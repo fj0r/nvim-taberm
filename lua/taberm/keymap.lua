@@ -10,7 +10,7 @@ vim.api.nvim_create_user_command('Xdebug', tbm.debug, { nargs = '?', desc = 'ter
 
 local M = {}
 
-local escape = function ()
+local escape = function()
     local k = [[<C-\><C-N>]]
     local nested = vim.b['taberm_blocked']
     if not nested then
@@ -32,7 +32,13 @@ function M.config(kcfg)
     vim.keymap.set({ 'n', 't' }, kcfg.toggle, '',
         { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
     vim.keymap.set({ 'n', 't' }, kcfg.toggle_h, '',
-        { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm horizontal' })
+        {
+            callback = function() tbm.toggle_taberm(true) end,
+            noremap = true,
+            silent = true,
+            desc =
+            'toggle taberm horizontal'
+        })
 
     if kcfg.escape ~= nil then
         vim.keymap.set('t', kcfg.escape, escape,
