@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     pattern = 'term://*',
     callback = function (ctx)
         core.prepare(ctx)
+        core.active(ctx.buf)
     end ,
 })
 

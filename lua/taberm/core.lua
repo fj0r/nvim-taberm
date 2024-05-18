@@ -4,6 +4,7 @@ local M = {}
 
 local TAB_TERM = {}
 local TOGGLE_INDEX = {}
+local BUF_INDEX = {}
 
 
 function M.get(conf, action, cmd, newtab)
@@ -38,7 +39,9 @@ function M.get(conf, action, cmd, newtab)
             if not tot then
                 TAB_TERM[tab] = {}
             end
-            TAB_TERM[tab][cnt] = vim.api.nvim_get_current_buf()
+            local current_buf = vim.api.nvim_get_current_buf()
+            TAB_TERM[tab][cnt] = current_buf
+            BUF_INDEX[current_buf] = {tab, cnt}
 
             for _, k in ipairs(conf.direct_keys) do
                 vim.keymap.set("n", k,
@@ -49,7 +52,7 @@ function M.get(conf, action, cmd, newtab)
                     end,
                     {
                         desc = "term: " .. k,
-                        buffer = TAB_TERM[tab][cnt],
+                        buffer = current_buf,
                         noremap = true,
                         silent = true,
                         nowait = true
@@ -77,10 +80,16 @@ function M.prepare(ctx)
     vim.opt_local.cursorline = false
     vim.opt_local.lazyredraw = false
     vim.opt_local.sidescrolloff = 0
+
     local l = u.lines()
     if l.curr >= l.last then
         vim.api.nvim_command('startinsert')
     end
+end
+
+function M.active(buf)
+    local i = BUF_INDEX[buf]
+    TOGGLE_INDEX[i[1]] = i[2]
 end
 
 function M.release(buf)
@@ -194,7 +203,7 @@ function M.toggle_taberm(horizontal)
 end
 
 function M.debug()
-    u.log { TAB_TERM = TAB_TERM, TOGGLE_IDX = TOGGLE_INDEX }
+    u.log { TAB_TERM = TAB_TERM, TOGGLE_IDX = TOGGLE_INDEX, BUF_INDEX = BUF_INDEX }
 end
 
 function M.setup(tbl)
