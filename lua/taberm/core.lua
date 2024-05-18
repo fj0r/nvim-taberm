@@ -183,13 +183,11 @@ function M.toggle_taberm(horizontal)
         vim.api.nvim_win_close(w, { force = true })
     end
 
-    local first = true
     for _, b in pairs(show) do
-        if first then
-            first = false
-            vim.api.nvim_command('botright vnew')
-        else
+        if horizontal then
             vim.api.nvim_command('rightbelow new')
+        else
+            vim.api.nvim_command('botright vnew')
         end
         vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
     end
