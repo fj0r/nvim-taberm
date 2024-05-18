@@ -115,7 +115,7 @@ function M.close_tab(tab)
     end
 end
 
-function M.toggle_taberm()
+function M.toggle_taberm(horizontal)
     local ctab = vim.api.nvim_get_current_tabpage()
     local ctabwins = vim.api.nvim_tabpage_list_wins(ctab)
     -- cterm : { id -> buf }
@@ -168,7 +168,7 @@ function M.toggle_taberm()
                     table.insert(show, tb)
                 end
             else
-                if M.config.toggle_layout == 'horizontal' then
+                if horizontal then
                     M.c()
                 else
                     M.v()
@@ -187,9 +187,9 @@ function M.toggle_taberm()
     for _, b in pairs(show) do
         if first then
             first = false
-            vim.api.nvim_command(M.layout_command[1])
+            vim.api.nvim_command('botright vnew')
         else
-            vim.api.nvim_command(M.layout_command[2])
+            vim.api.nvim_command('rightbelow new')
         end
         vim.api.nvim_win_set_buf(vim.api.nvim_get_current_win(), b)
     end
@@ -199,15 +199,9 @@ function M.debug()
     u.log { TAB_TERM = TAB_TERM, TOGGLE_IDX = TOGGLE_COUNT }
 end
 
-local layout_command = {
-    vertical = { 'botright vnew', 'rightbelow new' },
-    horizontal = { 'botright new', 'rightbelow vnew' }
-}
 function M.setup(tbl)
     local conf = vim.tbl_deep_extend('force', require('taberm.config'), tbl or {})
     M.config = conf
-
-    M.layout_command = layout_command[conf.toggle_layout]
 
     M.t = M.get(conf, 'tabnew', '', true)
     M.v = M.get(conf, 'rightbelow vnew', '')

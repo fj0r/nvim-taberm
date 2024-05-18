@@ -31,6 +31,8 @@ function M.config(kcfg)
 
     vim.keymap.set({ 'n', 't' }, kcfg.toggle, '',
         { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' })
+    vim.keymap.set({ 'n', 't' }, kcfg.toggle_h, '',
+        { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm horizontal' })
 
     if kcfg.escape ~= nil then
         vim.keymap.set('t', kcfg.escape, escape,

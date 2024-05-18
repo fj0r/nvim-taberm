@@ -6,6 +6,7 @@ local default_config = {
         horizontal     = '<leader>xc',
         horizontal_ext = '<leader>xC',
         toggle         = '<M-x>',
+        toggle_h       = '<M-c>',
         paste          = '<M-y>',
         escape         = '<M-;>',
     },
@@ -17,7 +18,6 @@ local default_config = {
         '<C-f>', '<C-b>', '<M-f>', '<M-b>',
         '<C-n>', '<C-p>', '<M-n>', '<M-p>',
     },
-    toggle_layout = 'vertical',
     shell_integration = true
 }
 
