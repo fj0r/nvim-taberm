@@ -34,7 +34,7 @@ function M.get(conf, action, cmd, newtab)
             local name
             local sh = string.gsub(shell, '.+/', '')
             local pid = vim.api.nvim_buf_get_var(current_buf, 'terminal_job_pid')
-            if u.contains(conf.shell_integration.main_tcd, cnt) then
+            if u.contains(conf.shell_integration.follow_cd, cnt) then
                 name = 'term://' .. cnt .. ':' .. sh .. '/' .. pid
             else
                 name = 'term://' .. cnt .. '.' .. sh .. '/' .. pid

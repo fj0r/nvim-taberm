@@ -10,11 +10,9 @@ function M.setup(conf, bufs)
     function HookPwdChanged(after, before)
         vim.b.pwd = after
 
-        if conf.main_tcd then
-            local curr = vim.api.nvim_get_current_buf()
-            if not u.contains(conf.main_tcd, bufs[curr][2]) then
-                return
-            end
+        local curr = vim.api.nvim_get_current_buf()
+        if not u.contains(conf.follow_cd, bufs[curr][2]) then
+            return
         end
 
         local git_dir = vim.fs.find('.git', {

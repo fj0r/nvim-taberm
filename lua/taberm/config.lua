@@ -19,7 +19,7 @@ local default_config = {
         '<C-n>', '<C-p>', '<M-n>', '<M-p>',
     },
     shell_integration = {
-        main_tcd = {1}
+        follow_cd = {1},
     }
 }
 
