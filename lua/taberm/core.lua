@@ -222,8 +222,8 @@ function M.setup(tbl)
 
     require 'taberm.keymap'.config(conf.keymap)
 
-    if conf.shell_integration then
-        require 'taberm.shell'.setup()
+    if conf.shell_integration ~= nil then
+        require 'taberm.shell'.setup(conf.shell_integration, BUF_INDEX)
     end
 end
 

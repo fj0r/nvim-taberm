@@ -1,5 +1,5 @@
 local M = {}
-function M.setup()
+function M.setup(conf, bufs)
     --[[ tcd hook
     if 'NVIM' in $env {
         nvim --headless --noplugin --server $env.NVIM --remote-send $"<cmd>lua HookPwdChanged\('($after)', '($before)')<cr>"
@@ -7,6 +7,13 @@ function M.setup()
     --]]
     function HookPwdChanged(after, before)
         vim.b.pwd = after
+
+        if conf.main_tcd then
+            local curr = vim.api.nvim_get_current_buf()
+            if bufs[curr][2] ~= 1 then
+                return
+            end
+        end
 
         local git_dir = vim.fs.find('.git', {
             upward = true,

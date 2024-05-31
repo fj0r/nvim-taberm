@@ -18,7 +18,9 @@ local default_config = {
         '<C-f>', '<C-b>', '<M-f>', '<M-b>',
         '<C-n>', '<C-p>', '<M-n>', '<M-p>',
     },
-    shell_integration = true
+    shell_integration = {
+        main_tcd = true
+    }
 }
 
 return default_config
