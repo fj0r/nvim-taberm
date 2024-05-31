@@ -1,3 +1,5 @@
+local u = require 'taberm.utils'
+
 local M = {}
 function M.setup(conf, bufs)
     --[[ tcd hook
@@ -10,7 +12,7 @@ function M.setup(conf, bufs)
 
         if conf.main_tcd then
             local curr = vim.api.nvim_get_current_buf()
-            if bufs[curr][2] ~= 1 then
+            if not u.contains(conf.main_tcd, bufs[curr][2]) then
                 return
             end
         end

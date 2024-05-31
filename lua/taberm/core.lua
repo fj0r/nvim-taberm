@@ -29,9 +29,18 @@ function M.get(conf, action, cmd, newtab)
             vim.api.nvim_win_set_buf(win, tot[cnt])
         else
             if action then vim.api.nvim_command(action) end
-            local name = '[' .. cnt .. ']' .. shell .. "://" .. "<b:terminal_job_pid>"
-            vim.fn.termopen(shell, { name = name })
-            --vim.api.nvim_command('silent tcd! .')
+            vim.fn.termopen(shell)
+            local current_buf = vim.api.nvim_get_current_buf()
+            local name
+            local sh = string.gsub(shell, '.+/', '')
+            local pid = vim.api.nvim_buf_get_var(current_buf, 'terminal_job_pid')
+            if u.contains(conf.shell_integration.main_tcd, cnt) then
+                name = 'term://' .. cnt .. ':' .. sh .. '/' .. pid
+            else
+                name = 'term://' .. cnt .. '.' .. sh .. '/' .. pid
+            end
+            vim.api.nvim_buf_set_name(current_buf, name)
+
             if newtab then
                 tab = vim.api.nvim_get_current_tabpage()
                 tot = TAB_TERM[tab]
@@ -39,7 +48,6 @@ function M.get(conf, action, cmd, newtab)
             if not tot then
                 TAB_TERM[tab] = {}
             end
-            local current_buf = vim.api.nvim_get_current_buf()
             TAB_TERM[tab][cnt] = current_buf
             BUF_INDEX[current_buf] = {tab, cnt}
 

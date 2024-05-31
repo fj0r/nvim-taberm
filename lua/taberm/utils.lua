@@ -43,6 +43,15 @@ function M.has_key(list)
     return false
 end
 
+function M.contains (list, i)
+    for _, v in ipairs(list) do
+        if v == i then
+            return true
+        end
+    end
+    return false
+end
+
 function M.lines()
     local window = vim.fn.line('w$') - vim.fn.line('w0')
     local curr = vim.fn.line('.')
