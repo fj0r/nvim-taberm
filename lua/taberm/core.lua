@@ -97,6 +97,7 @@ end
 
 function M.active(buf)
     local i = BUF_INDEX[buf]
+    if i == nil then return end
     TOGGLE_INDEX[i[1]] = i[2]
 end
 

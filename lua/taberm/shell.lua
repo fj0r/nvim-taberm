@@ -11,7 +11,7 @@ function M.setup(conf, bufs)
         vim.b.pwd = after
 
         local curr = vim.api.nvim_get_current_buf()
-        if not u.contains(conf.follow_cd, bufs[curr][2]) then
+        if bufs[curr] ~= nil and not u.contains(conf.follow_cd, bufs[curr][2]) then
             return
         end
 
