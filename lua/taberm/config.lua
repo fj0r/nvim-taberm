@@ -1,6 +1,6 @@
 local default_config = {
     keymap = {
-        tab            = '<leader>x',
+        tab            = '<M-\\>',
         --vertical       = '<leader>xv',
         --vertical_ext   = '<leader>xV',
         --horizontal     = '<leader>xc',
