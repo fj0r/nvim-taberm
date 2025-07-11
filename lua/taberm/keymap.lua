@@ -31,7 +31,7 @@ end
 function M.config(kcfg)
     km {
         {
-            'n',
+            { 'n', 't' },
             kcfg.tab,
             '',
             { callback = tbm.t, noremap = true, silent = true, desc = 'new term tab' }
@@ -61,7 +61,7 @@ function M.config(kcfg)
             { callback = tbm.C, noremap = true, silent = true, desc = 'new term ext' }
         },
         {
-            { 'n',                          't' },
+            { 'n', 't' },
             kcfg.toggle,
             '',
             { callback = tbm.toggle_taberm, noremap = true, silent = true, desc = 'toggle taberm' }
